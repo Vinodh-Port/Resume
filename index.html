@@ -620,7 +620,15 @@
   </div>
 
   <script>
-    google.script.run.withSuccessHandler(renderResume).parseResumeDoc();
+    const API_URL = "https://script.google.com/macros/s/AKfycbwmMHvbVcOGvoKmlKHANBc0fN9DKisuvn8dPxHRKBaRFxVogLwBWq248DFL0mzyCJbpJQ/exec?api=1";
+
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => renderResume(data))
+  .catch(() => {
+    document.getElementById('loader').innerText =
+      "Unable to sync live data right now. Please refresh or check deployment access.";
+  });
 
     function renderResume(data) {
       const app = document.getElementById('app');
